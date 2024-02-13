@@ -134,6 +134,18 @@ D-->E
             - Data File
             - Transaction Log File
 
-    - Clustrering By Primary Key
+    - Clustering By Primary Key
         - 모든 테이블은 PK를 기준으로 Clustering되어 저장
-        - PK값 순서대로 disk에 ㅈ저아
+        - PK값 순서대로 disk에 저장
+        - Secondary Index는 Record 주소대신 PK값을 논리 주소로 사용
+        - PK = Clustering index
+            - 빠른 Range scan
+        - PK는 query 실행계획에서 타 index 보다 높은 비중 차지(높은 확률)
+        - Oracle DB의 IOT(Index Organized Table) = MySQL의 default table 구조
+    
+    - Supporting Foreign Key
+        - InnoDB 레벨에서만 지원(MyISAM, MEMORY 제외)
+        - 서버운영의 편리 측면에서 FK를 사용하지 않기도
+            - 개발환경의 DB에서는 좋은 가이드 역할
+        - 부모/자식 테이블 둘 다 Index 생성 요구
+        - 변경 시, 데이터 체크 작업필요로 lock s
